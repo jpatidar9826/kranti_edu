@@ -36,8 +36,24 @@ export default function Home() {
   const [modules, setModules] = useState([]);
 
   const router = useRouter()
-  const id = router.query.id
+  const id = router.query.id;
   console.log("course id", id); //to choose mobile drawer is open or not
+
+  useEffect(() => {
+    const fetchProfile = async () => {
+      try {
+        const response = await axios.post(`https://kranti-education.onrender.com/sendmodule`, { productid: id });
+        console.log("data response",response)
+        setModules(response.data);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    fetchProfile();
+  }, [id]);
+
+  console.log(modules)
 
   //when course details are open moudle details will be closed
   const courseClickHandler = () => {
@@ -50,14 +66,14 @@ export default function Home() {
   const prevClickHandler = () => {
     if (activeModuleId === 0) return;
     const prevId = activeModuleId - 1;
-    setActiveModule(Modules[prevId]);
+    setActiveModule(modules[prevId]);
     setActiveModuleId(prevId);
   };
 
   const nextClickHandler = () => {
-    if (activeModuleId === Modules.length - 1) return;
+    if (activeModuleId === modules.length - 1) return;
     const nextId = activeModuleId + 1;
-    setActiveModule(Modules[nextId]);
+    setActiveModule(modules[nextId]);
     setActiveModuleId(nextId);
   };
 
@@ -66,21 +82,9 @@ export default function Home() {
     setMobileDrawerOpen(!mobileDrawerOpen);
   };
 
-  useEffect(() => {
-    const fetchProfile = async () => {
-      try {
-        const response = await axios.post(`https://kranti-education.onrender.com/sendmodule`, { productid: "647c50e39a1f8683567926d7" });
-        console.log("data response",response)
-        setModules(response.data);
-      } catch (error) {
-        console.error(error);
-      }
-    };
+  
 
-    fetchProfile();
-  }, []);
 
-  console.log(modules)
 
 
   return (
