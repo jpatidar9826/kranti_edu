@@ -1,6 +1,7 @@
 import Head from "next/head";
 import Image from "next/image";
 import { Inter } from "next/font/google";
+const kidsImg = "https://img.freepik.com/premium-photo/kids-science-concept-cute-indian-little-kid-student-scientist-studying-science-experimenting-with-microscope-chemicals-with-diagrams-doodles-drawn-green-chalkboard_466689-17299.jpg";
 // import styles from '@/styles/Home.module.css'
 
 import Link from "next/link";
@@ -68,10 +69,10 @@ export default function Home() {
               </div>
               <div className="mg2_container">
                 <Image
-                  src="/../public/kids.jpg"
+                  src={kidsImg}
                   className="img2"
                   alt=""
-                  width="100"
+                  width="500"
                   height="200"
                 />
               </div>
