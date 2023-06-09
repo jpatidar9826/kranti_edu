@@ -21,8 +21,8 @@ const Profile = () => {
         const fetchProfile = async () => {
             try {
                 const response = await axios.post(`https://kranti-education.onrender.com/showprofile`, { token });
-                console.count("res", response)
-                console.log("my calling")
+                console.log("res", response);
+                console.log("my calling");
                 setProfile(response.data);
             } catch (error) {
                 console.error(error);

@@ -1,5 +1,5 @@
 "use client";
-import { useState, useEffect } from 'react';
+import { useState, useEffect } from "react";
 import styles from "@/styles/courses.module.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -12,18 +12,10 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import Image from "next/image";
 import Link from "next/link";
-import axios from 'axios';
-import { useRouter } from 'next/router';
+import axios from "axios";
+import { useRouter } from "next/router";
 
 //this are course details pass this as props from previous page
-const course = {
-  id: "0",
-  url: "https://previews.123rf.com/images/amisb/amisb1704/amisb170400138/76394955-design-concept-of-word-science-website-banner.jpg",
-  subject: "Science",
-  desctiption:
-    "Code has to be executed after the state has been updated Place that code in the call back function which is the second argument to the setState method.",
-};
-
 
 /******* Note All the styling is done, except fonts add more styling if you need, page is
   robust, and responsive except code, which you can make more redundant if you need
@@ -34,26 +26,40 @@ export default function Home() {
   const [activeModule, setActiveModule] = useState(); //to choose object from module array
   const [mobileDrawerOpen, setMobileDrawerOpen] = useState(false);
   const [modules, setModules] = useState([]);
+  const [course, setCourse] = useState({
+    id: "0",
+    url: "https://previews.123rf.com/images/amisb/amisb1704/amisb170400138/76394955-design-concept-of-word-science-website-banner.jpg",
+    subject: "Science",
+    desctiption:
+      "Science is a study of the natural world. It depends on observation, documentation and experimentation. Every event has a logical scientific explanation. Word “Science “has derived from a Latin word “Scientia” meaning 'Knowledge'",
+  });
 
-  const router = useRouter()
+  const router = useRouter();
   const id = router.query.id;
   console.log("course id", id); //to choose mobile drawer is open or not
 
   useEffect(() => {
     const fetchProfile = async () => {
       try {
-        const response = await axios.post(`https://kranti-education.onrender.com/sendmodule`, { productid: id });
-        console.log("data response",response)
-        setModules(response.data);
+        const response = await axios.post(
+          `https://kranti-education.onrender.com/sendmodule`,
+          { productid: id }
+        );
+
+        const data = await response.data;
+        console.log("data response", data);
+        console.log("data length", data.length);
+        if (data.length !== 0) {
+          setModules(data);
+        }
       } catch (error) {
         console.error(error);
       }
     };
-
     fetchProfile();
   }, [id]);
 
-  console.log(modules)
+  console.log(modules);
 
   //when course details are open moudle details will be closed
   const courseClickHandler = () => {
@@ -82,11 +88,6 @@ export default function Home() {
     setMobileDrawerOpen(!mobileDrawerOpen);
   };
 
-  
-
-
-
-
   return (
     <>
       {/* copy all the code from module_container leave main */}
@@ -104,7 +105,7 @@ export default function Home() {
                 <p>close</p>
               </div>
               {/*Back to Dashboard button wrap this button in Link tag and add route url */}
-              <Link href={'/dashboard'}>
+              <Link href={"/dashboard"}>
                 <div className={styles.back_button}>
                   <FontAwesomeIcon icon={faArrowLeft} />
                   <p>back to Dashboard</p>
@@ -158,7 +159,7 @@ export default function Home() {
           <div>
             {/*Back to Dashboard button wrap this button in Link tag and add route url */}
 
-            <Link href={'/dashboard'}>
+            <Link href={"/dashboard"}>
               <div className={styles.back_button}>
                 <FontAwesomeIcon icon={faArrowLeft} />
                 <p>back to Dashboard</p>
@@ -220,7 +221,7 @@ export default function Home() {
             //MaKe neceesary change accordingly or if you want to add more details about course
             <div className={styles.course_detail_wrap}>
               <h1>Course: {course.subject}</h1>
-              <Image src={course.url} alt={course.subject + " image"} />
+              <Image width={500} height={400} src={course.url} alt={course.subject + " image"} />
               <p>{course.desctiption}</p>
             </div>
           ) : (
