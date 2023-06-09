@@ -68,7 +68,7 @@ export default function Home() {
               </div>
               <div className="mg2_container">
                 <Image
-                  src="/kids.jpg"
+                  src="/../public/kids.jpg"
                   className="img2"
                   alt=""
                   width="100"
